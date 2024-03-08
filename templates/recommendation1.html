@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 1000px; /* Adjust the max-width for the container */
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%; /* Set the table width to 100% */
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px; /* Adjust the padding for better spacing */
+            text-align: left;
+        }
+
+        .image-cell img {
+        width: 250px; /* Set the width of the image */
+        height: 250px; /* Set the height of the image */
+    }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .no-recipes {
+            font-style: italic;
+            text-align: center;
+        }
+        
+        .recipe-image {
+            max-width: 200px; /* Set max-width for the recipe images */
+            height: auto; /* Maintain aspect ratio */
+            display: block;
+            margin: 0 auto; /* Center the images */
+        }
+
+        .clicked-name {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+    
+    
+    
+    
+    <title>Recommended Recipes</title>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Recommended Recipes</h1>
+
+        <!-- Display DRI values in a table -->
+        <h2>DRI Values</h2>
+        <table>
+            <tr>
+                <th>Meal Type</th>
+                <th>Total Protein</th>
+                <th>Total Fat</th>
+                <th>Total Carbohydrates</th>
+                <th>Total Calories</th>
+            </tr>
+            {% for meal_type, dri_result in dri_results.items %}
+            <tr>
+                <td>{{ meal_type|title }}</td>
+                <td>{{ dri_result.meal_protein }}</td>
+                <td>{{ dri_result.meal_fat }}</td>
+                <td>{{ dri_result.meal_carbohydrates }}</td>
+                <td>{{ dri_result.meal_calories }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!-- Display top 5 recommended recipes for each meal type -->
+        <h2>Top 5 Recommended Recipes</h2>
+        <table>
+            <tr>
+                <th>Breakfast</th>
+                <th>Lunch</th>
+                <th>Dinner</th>
+                <th>Snacks</th>
+            </tr>
+            <tr>
+                <td >{{ recommended_recipes_by_meal.breakfast.0.Name }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.0.ProteinContent }}</td>
+                <td>
+                    <img src="{{ recommended_recipes_by_meal.breakfast.0.Images }}" alt="Recipe Image" class="recipe-image">
+                </td>
+                
+                <td >{{ recommended_recipes_by_meal.breakfast.0.FatContent }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.0.CarbohydrateContent }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.0.Calories }}</td>
+                
+
+                <td >{{ recommended_recipes_by_meal.breakfast.1.Name }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.1.ProteinContent }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.1.FatContent }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.1.CarbohydrateContent }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.1.Calories }}</td>
+
+
+                <td >{{ recommended_recipes_by_meal.breakfast.2.Name }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.2.ProteinContent }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.2.FatContent }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.2.CarbohydrateContent }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.2.Calories }}</td>
+
+
+                <td >{{ recommended_recipes_by_meal.breakfast.3.Name }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.3.ProteinContent }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.3.FatContent }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.3.CarbohydrateContent }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.3.Calories }}</td>
+
+
+                <td >{{ recommended_recipes_by_meal.breakfast.4.Name }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.4.ProteinContent }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.4.FatContent }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.4.CarbohydrateContent }}</td>
+                <td >{{ recommended_recipes_by_meal.breakfast.4.Calories }}</td>
+
+            </tr>
+
+
+
+
+
+
+
+
+                <tr>
+                    <td >{{ recommended_recipes_by_meal.lunch.0.Name }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.0.ProteinContent }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.0.FatContent }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.0.CarbohydrateContent }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.0.Calories }}</td>
+                    
+    
+                    <td >{{ recommended_recipes_by_meal.lunch.1.Name }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.1.ProteinContent }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.1.FatContent }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.1.CarbohydrateContent }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.1.Calories }}</td>
+    
+    
+                    <td >{{ recommended_recipes_by_meal.lunch.2.Name }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.2.ProteinContent }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.2.FatContent }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.2.CarbohydrateContent }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.2.Calories }}</td>
+    
+    
+                    <td >{{ recommended_recipes_by_meal.lunch.3.Name }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.3.ProteinContent }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.3.FatContent }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.3.CarbohydrateContent }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.3.Calories }}</td>
+    
+    
+                    <td >{{ recommended_recipes_by_meal.lunch.4.Name }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.4.ProteinContent }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.4.FatContent }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.4.CarbohydrateContent }}</td>
+                    <td >{{ recommended_recipes_by_meal.lunch.4.Calories }}</td>
+
+                    
+
+
+
+
+                </tr>
+
+
+
+
+
+
+
+                    <tr>
+                        <td >{{ recommended_recipes_by_meal.dinner.0.Name }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.0.ProteinContent }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.0.FatContent }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.0.CarbohydrateContent }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.0.Calories }}</td>
+                        
+        
+                        <td >{{ recommended_recipes_by_meal.dinner.1.Name }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.1.ProteinContent }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.1.FatContent }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.1.CarbohydrateContent }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.1.Calories }}</td>
+        
+        
+                        <td >{{ recommended_recipes_by_meal.dinner.2.Name }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.2.ProteinContent }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.2.FatContent }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.2.CarbohydrateContent }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.2.Calories }}</td>
+        
+        
+                        <td >{{ recommended_recipes_by_meal.dinner.3.Name }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.3.ProteinContent }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.3.FatContent }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.3.CarbohydrateContent }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.3.Calories }}</td>
+        
+        
+                        <td >{{ recommended_recipes_by_meal.dinner.4.Name }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.4.ProteinContent }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.4.FatContent }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.4.CarbohydrateContent }}</td>
+                        <td >{{ recommended_recipes_by_meal.dinner.4.Calories }}</td>
+
+                        
+
+                    </tr>
+
+
+
+
+
+
+
+
+
+
+                        <tr>
+                            <td >{{ recommended_recipes_by_meal.snacks.0.Name }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.0.ProteinContent }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.0.FatContent }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.0.CarbohydrateContent }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.0.Calories }}</td>
+                            
+            
+                            <td >{{ recommended_recipes_by_meal.snacks.1.Name }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.1.ProteinContent }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.1.FatContent }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.1.CarbohydrateContent }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.1.Calories }}</td>
+            
+            
+                            <td >{{ recommended_recipes_by_meal.snacks.2.Name }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.2.ProteinContent }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.2.FatContent }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.2.CarbohydrateContent }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.2.Calories }}</td>
+            
+            
+                            <td >{{ recommended_recipes_by_meal.snacks.3.Name }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.3.ProteinContent }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.3.FatContent }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.3.CarbohydrateContent }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.3.Calories }}</td>
+            
+            
+                            <td >{{ recommended_recipes_by_meal.snacks.4.Name }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.4.ProteinContent }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.4.FatContent }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.4.CarbohydrateContent }}</td>
+                            <td >{{ recommended_recipes_by_meal.snacks.4.Calories }}</td>
+                        </tr>
+
+        </table>
+        <div id="clickedName" class="clicked-name"></div>
+
+        <!-- Recipe Details Table -->
+       
+            <tr>
+                <td id="mealType"></td>
+                <td id="recipeName"></td>
+                <td id="description"></td>
+                <td id="ingredients"></td>
+                <td id="recipe"></td>
+                <td id="macroNutrients"></td>
+            </tr>
+        </table>
+    </div>
+
+
+
+
+</body>
+</html>
