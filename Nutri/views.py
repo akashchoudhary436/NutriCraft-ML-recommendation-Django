@@ -4,7 +4,9 @@ from sklearn.neighbors import NearestNeighbors
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from .models import Food  
+from .models import Contact  
 from django.views.decorators.csrf import csrf_exempt
+
 
 # Load CSV file once when the server starts
 df = pd.read_csv('fdata.csv', on_bad_lines='skip')
@@ -18,10 +20,10 @@ def calculate_bmr(age, weight, height, gender):
 def calculate_amr(bmr, activity_level):
     activity_multipliers = {
         'sedentary': 1.2,
-        'lightly active': 1.375,
-        'moderately active': 1.55,
+        'lightly_active': 1.375,
+        'moderately_active': 1.55,
         'active': 1.725,
-        'very active': 1.9
+        'very_active': 1.9
     }
     return bmr * activity_multipliers.get(activity_level.lower(), 1.2)
 
@@ -186,17 +188,17 @@ def index(request):
 
         return render(request, 'recommendation.html', context)
 
-    return render(request, 'home.html')
+    return render(request, 'index.html')
 
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'index.html')
 
 def contact(request):
     return render(request, 'contact.html')
 
-def aboutus(request):
-    return render(request, 'home.html')
+def form(request):
+    return render(request, 'form.html')
 
 def SignupPage(request):
     return render(request, 'home.html')
@@ -260,3 +262,28 @@ def get_food_details(request):
     return render(request, 'food_details.html', {'food_details_by_meal': food_details_by_meal})
 
 
+def graph(request):
+     return render(request, 'graph.html')
+
+
+
+
+def contact(request):
+    if request.method == 'POST':
+        # Get values from form submission
+        Name = request.POST.get('Cname')
+        Email = request.POST.get('Cemail')
+        Subject = request.POST.get('Csubject')
+        Message = request.POST.get('Cmessage')
+
+
+
+        # Save contact details to Contact model
+        contact_model = Contact(Name=Name, Email=Email, Subject=Subject, Message=Message)
+        contact_model.save()
+
+        # Redirect to a success page after form submission
+        return render(request,'index.html')
+    else:
+        # Render contact page if request method is not POST
+        return render(request, 'index.html')

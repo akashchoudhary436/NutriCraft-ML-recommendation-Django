@@ -13,8 +13,8 @@
 
 
 *{
-    padding : 0;
-    margin: 0;
+    padding : 5;
+    margin: 5;
 }
 
 #top_nav {
@@ -46,7 +46,7 @@
 }
 .navcontainer{
   align-items: center;
-  margin-top: 0%;
+  margin-top: 5%;
 }
 
 .nav-item{
@@ -85,7 +85,7 @@
 
 .card-body {
 
-    width: 200px; /* Set fixed width */
+    width: 180px; /* Set fixed width */
     height: 100px; /* Set fixed height */
 }
 
@@ -96,13 +96,11 @@
         }
 
 
-.subfood{
+    .subfood {
     display: flex;
-    margin-left: 142px;
-    margin-top: 30px;
-    box-shadow: 3cm;
+    margin-left: 6%; /* Adjust as needed */
+    margin-top: 10%; /* Adjust as needed */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
- 
 }
 
 .subfood:hover {
@@ -118,9 +116,10 @@
    font-size: 15px; 
 };
 
-.foodlist{
-    margin-left: 1000px;
+.foodlist {
+    margin-left: 10%; /* Adjust the percentage value to dynamically position the element */
 }
+
 
 .blsd{
     display: flex;
@@ -147,6 +146,16 @@ p{
     justify-content: space-evenly;
 }
 
+.dri-heading h1 {
+    font-family: 'Arial', sans-serif; /* Choose an appropriate font */
+    font-size: 3rem; /* Adjust the font size as needed */
+    color: #333; /* Choose a suitable color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Add a subtle text shadow */
+}
+
+.dri-heading h1:hover {
+    color: #ff4500; /* Change the color on hover */
+}
 
 .h66{
     margin-left: 5%;
@@ -180,8 +189,25 @@ p{
     transform: scale(0.98); /* Scale down the card slightly on hover */
 }
 
-
-
+ /* Custom style for adding shadow to the container */
+ .custom-container {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            width: 80%;
+        }
+ .table-custom {
+            width: 50%; /* Adjust the width as needed */
+            margin: auto; /* Center the table */
+        }
+        /* Custom style for making the top layer darker */
+.table-darken thead {
+            background-color: #343a40; /* Dark background color */
+            color: #ffffff; /* Text color for better readability */
+        }
+    .containercard {
+    width: 100%;
+    max-height: 60vh; /* Set a maximum height for the container relative to the viewport height */
+    overflow-y: auto; /* Add vertical scroll if content overflows */
+}
 
 </style>
 
@@ -190,58 +216,74 @@ p{
     <title>Document</title>
 </head>
 <body>
-     <!--navbar-->
-     <div id="top_nav" class="navbar navbar-expand-md navbar-purple">
-        <div class="navcontainer">
 
-          
-          
 
-            <div id="ETM_navbar" class="navbar-collapse collapse">
-                <ul class="navbar-nav justify-content-md-center col-md">
-                    <li class="nav-item"><a class="nav-link" style="color: #ff8456;" href="/how-it-works/">How It Works &nbsp; &nbsp;</a></li>
-                    <li class="nav-item"><a class="nav-link" style="color: #ff8456;" href="/food/browse/?type=recipe">Browse &nbsp;
-                        Foods</a></li>
-                    <li class="nav-item"><a class="nav-link" style="color: #ff8456;" href="/diet-plan/">Supported Diets &nbsp; &nbsp;</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" style="color: #ff8456;" href="/professionals/">For Professionals &nbsp; &nbsp;</a>
-                    </li>
-                </ul>
 
-                 <form class="form text-center no-gutters">
-                        <div class="col-auto ">
-                            <button type="button" id="btn" class="btn btn-primary">Sign up</button>
-                        </div>
-                        <a class="sign-in-link" id="msg" href="/app/login" >Already
-                            a member? Sign
-                            in.</a>
-                    </form>
-                
 
-            </div>
-        </div>
+
+    <div class="col-md-12 text-center dri-heading">
+        <h1>Macro- Nutrient Values</h1>
+    </div>
+    
+    <div class="container custom-container"> <!-- Added the container class and custom shadow -->
+        <table class="table table-hover table-darken">
+            <thead>
+                <tr>
+                    <th scope="col">Macro-Nutrient</th>
+                    <th scope="col">Breakfast</th>
+                    <th scope="col">Lunch</th>
+                    <th scope="col">Snacks</th>
+                    <th scope="col">Dinner</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Calories</th>
+                    <td>{{ dri_results.breakfast.meal_calories |floatformat:2}}</td>
+                    <td>{{ dri_results.lunch.meal_calories |floatformat:2}}</td>
+                    <td>{{ dri_results.snacks.meal_calories |floatformat:2}}</td>
+                    <td>{{ dri_results.dinner.meal_calories |floatformat:2}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Proteins</th>
+                    <td>{{ dri_results.breakfast.meal_protein |floatformat:2}}</td>
+                    <td>{{ dri_results.lunch.meal_protein |floatformat:2}}</td>
+                    <td>{{ dri_results.snacks.meal_protein |floatformat:2}}</td>
+                    <td>{{ dri_results.dinner.meal_protein |floatformat:2}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Carbohydrate</th>
+                    <td>{{ dri_results.breakfast.meal_carbohydrates |floatformat:2}}</td>
+                    <td>{{ dri_results.lunch.meal_carbohydrates |floatformat:2}}</td>
+                    <td>{{ dri_results.snacks.meal_carbohydrates |floatformat:2}}</td>
+                    <td>{{ dri_results.dinner.meal_carbohydrates |floatformat:2}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Fats</th>
+                    <td>{{ dri_results.breakfast.meal_fat |floatformat:2}}</td>
+                    <td>{{ dri_results.lunch.meal_fat |floatformat:2}}</td>
+                    <td>{{ dri_results.snacks.meal_fat |floatformat:2}}</td>
+                    <td>{{ dri_results.dinner.meal_fat |floatformat:2}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <h2>DRI Values</h2>
-    <table>
-        <tr>
-            <th>Meal Type</th>
-            <th>Total Protein</th>
-            <th>Total Fat</th>
-            <th>Total Carbohydrates</th>
-            <th>Total Calories</th>
-        </tr>
-        {% for meal_type, dri_result in dri_results.items %}
-        <tr>
-            <td>{{ meal_type|title }}</td>
-            <td>{{ dri_result.meal_protein }}</td>
-            <td>{{ dri_result.meal_fat }}</td>
-            <td>{{ dri_result.meal_carbohydrates }}</td>
-            <td>{{ dri_result.meal_calories }}</td>
-        </tr>
-        {% endfor %}
-    </table>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
     <!--body-->
     <div class="rec-container">
@@ -261,50 +303,57 @@ p{
     </div>
 
     <div class="blsd">
+
+
+        <div class="containercard">
       <div class="breakfast">
-        {% for breakfast_recipe in recommended_recipes_by_meal.breakfast|slice:":5" %}
+        {% for breakfast_recipe in recommended_recipes_by_meal.breakfast %}
         <div class="subfood" id="card{{ forloop.counter }}" data-id="{{ breakfast_recipe.ID }}">
             <div class="card">
                 <img class="card-img-top" src="{{ breakfast_recipe.Images }}" alt="Card image cap">
             </div>
             <div class="card-body">
-                <h5 class="card_title" style="text-align: center;">{{ breakfast_recipe.Name }} Calories{{ breakfast_recipe.Calories }} CarbohydrateContent{{ breakfast_recipe.CarbohydrateContent }} ProteinContent{{ breakfast_recipe.ProteinContent }} FatContent{{ breakfast_recipe.FatContent }}</h5>
+                <h5 class="card_title" style="text-align: center;">{{ breakfast_recipe.Name }}</h5>
+            <p style="text-align: center;">Calories: {{ breakfast_recipe.Calories }}</p>
             </div>
         </div>
         {% endfor %}
     </div>
-    
+</div>    
     
         
+    <div class="containercard">
         <div class="lunch">
-        {% for lunch_recipe in recommended_recipes_by_meal.lunch|slice:":5" %}
-        <div class="subfood" id="card{{ forloop.counter }}" data-id="{{ lunch_recipe.ID }}">
-            <div class="card">
-                <img class="card-img-top" src="{{ lunch_recipe.Images }}" alt="Card image cap">
+            {% for lunch_recipe in recommended_recipes_by_meal.lunch %}
+            <div class="subfood" id="card{{ forloop.counter }}" data-id="{{ lunch_recipe.ID }}">
+                <div class="card">
+                    <img class="card-img-top" src="{{ lunch_recipe.Images }}" alt="Card image cap">
+                </div>
+                <div class="card-body">
+                    <h5 class="card_title" style="text-align: center;">{{ lunch_recipe.Name }}</h5>
+            <p style="text-align: center;">Calories: {{ lunch_recipe.Calories }}</p>
+                </div>
             </div>
-            <div class="card-body">
-                <h5 class="card_title" style="text-align: center;">{{ lunch_recipe.Name }} Calories{{ lunch_recipe.Calories }} CarbohydrateContent{{ lunch_recipe.CarbohydrateContent }} ProteinContent{{ lunch_recipe.ProteinContent }} FatContent{{ lunch_recipe.FatContent }}</h5>
-            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
     
-    
 
-
+    <div class="containercard">
     <div class="snacks">
-      {% for snacks_recipe in recommended_recipes_by_meal.snacks|slice:":5" %}
+      {% for snacks_recipe in recommended_recipes_by_meal.snacks %}
       <div class="subfood" id="card{{ forloop.counter }}" data-id="{{ snacks_recipe.ID }}">
           <div class="card">
               <img class="card-img-top" src="{{ snacks_recipe.Images }}" alt="Card image cap">
           </div>
           <div class="card-body">
-              <h5 class="card_title" style="text-align: center;">{{ snacks_recipe.Name }} Calories{{ snacks_recipe.Calories }} CarbohydrateContent{{ snacks_recipe.CarbohydrateContent }} ProteinContent{{ snacks_recipe.ProteinContent }} FatContent{{ snacks_recipe.FatContent }}</h5>
+            <h5 class="card_title" style="text-align: center;">{{ snacks_recipe.Name }}</h5>
+            <p style="text-align: center;">Calories: {{ snacks_recipe.Calories }}</p>
           </div>
       </div>
       {% endfor %}
   </div>
-  
+</div>
 
 
 
@@ -312,20 +361,22 @@ p{
 
 
 
-        
+  <div class="containercard">
     <div class="dinner">
-      {% for dinner_recipe in recommended_recipes_by_meal.dinner|slice:":5" %}
+      {% for dinner_recipe in recommended_recipes_by_meal.dinner %}
       <div class="subfood" id="card{{ forloop.counter }}" data-id="{{ dinner_recipe.ID }}">
           <div class="card">
               <img class="card-img-top" src="{{ dinner_recipe.Images }}" alt="Card image cap">
           </div>
           <div class="card-body">
-              <h5 class="card_title" style="text-align: center;">{{ dinner_recipe.Name }} </h5>
+            <h5 class="card_title" style="text-align: center;">{{ dinner_recipe.Name }}</h5>
+            <p style="text-align: center;">Calories: {{ dinner_recipe.Calories }}</p>
+            
           </div>
       </div>
       {% endfor %}
   </div>
-  
+</div>
 
                         
     </div>
