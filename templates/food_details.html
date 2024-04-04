@@ -176,12 +176,17 @@ p{
 </head>
 <body>   
    
+
+
+
+
+
    
    <!--secpg-blsd2-->
    <div class="blsd-2">
     <div class="headings">
       <div class="breakfast-2">
-          <h5>Breakfast</h5>
+          <h5>Breakfast </h5>
       </div>
       <div class="lunch-2">
           <h5>Lunch</h5>
@@ -200,7 +205,7 @@ p{
       <div class="card_body">
         <h5 class="card-title" style="margin-left: 17%;">{{ food_details_by_meal.breakfast.Name }}</h5>
         <p class="card-text"><p class="inti" style="margin-left: 5%;">Ingredients:</p>
-        <h6 class="h66" style="align-items: center;">paneer,onions,yogurt,garlic paste,cooking oil,red chilli powder,turmeric powder,garam masala,salt,lemon juice.</h6>
+        <h6 class="h66" style="align-items: center;">{{ food_details_by_meal.breakfast.Ingredient }}</h6>
       
       </p>
       </div>
@@ -215,7 +220,7 @@ p{
       <div class="card_body">
         <h5 class="card-title"  style="margin-left: 17%;">{{ food_details_by_meal.lunch.Name }}</h5>
         <p class="card-text"><p class="inti" style="margin-left: 5%;">Ingredients:</p>
-        <h6 class="h66" style="align-items: center;">paneer,onions,yogurt,garlic paste,cooking oil,red chilli powder,turmeric powder,garam masala,salt,lemon juice. </h6>
+        <h6 class="h66" style="align-items: center;">{{ food_details_by_meal.lunch.Ingredient }}</h6>
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item"><p>Recipe:</p>{{ food_details_by_meal.lunch.RecipeInstructions }}</li>
@@ -228,7 +233,7 @@ p{
       <div class="card_body">
         <h5 class="card-title" style="margin-left: 17%;">{{ food_details_by_meal.snacks.Name }}</h5>
         <p class="card-text"><p class="inti" style="margin-left: 5%;">Ingredients:</p>
-        <h6 class="h66" style="align-items: center;">paneer,onions,yogurt,garlic paste,cooking oil,red chilli powder,turmeric powder,garam masala,salt,lemon juice. </h6>
+        <h6 class="h66" style="align-items: center;">{{ food_details_by_meal.snacks.Ingredient }}</h6>
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item"><p>Recipe:</p>{{ food_details_by_meal.snacks.RecipeInstructions }}</li>
@@ -241,7 +246,7 @@ p{
       <div class="card_body">
         <h5 class="card-title" style="margin-left: 17%;">{{ food_details_by_meal.dinner.Name }}</h5>
         <p class="card-text"><p class="inti" style="margin-left: 5%;">Ingredients:</p>
-        <h6 class="h66" style="align-items: center;">paneer,onions,yogurt,garlic paste,cooking oil,red chilli powder,turmeric powder,garam masala,salt,lemon juice. </h6>
+        <h6 class="h66" style="align-items: center;">{{ food_details_by_meal.dinner.Ingredient }} </h6>
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item"><p>Recipe:</p>{{ food_details_by_meal.dinner.RecipeInstructions }}</li>
@@ -253,7 +258,533 @@ p{
   </div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!---
+
+
+  <div class="secpagecards">
+    <div class="card" style="width: 18rem;">
+        <img src="{{ food_details_by_meal.breakfast.Images }}" class="card-img-top" alt="...">
+        <div class="card_body">
+            <h5 class="card-title" style="margin-left: 17%;">{{ food_details_by_meal.breakfast.Name }}</h5>
+            <p class="card-text">
+                <p class="inti" style="margin-left: 5%; cursor: pointer;" onclick="toggleVisibility('breakfastIngredients')">Ingredients:</p>
+                <h6 class="h66" id="breakfastIngredients" style="align-items: center; display: none;">{{ food_details_by_meal.breakfast.Ingredient }}</h6>
+            </p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <p style="cursor: pointer;" onclick="toggleVisibility('breakfastRecipe')">Recipe:</p>
+                <p id="breakfastRecipe" style="display: none;">{{ food_details_by_meal.breakfast.RecipeInstructions }}</p>
+            </li>
+            <li class="list-group-item">
+                <p>Nutrients:</p>
+                <p>Proteins: {{ food_details_by_meal.breakfast.ProteinContent }}</p>
+                <p>Carbohydrates: {{ food_details_by_meal.breakfast.CarbohydrateContent }}</p>
+                <p>Fats: {{ food_details_by_meal.breakfast.FatContent }}</p>
+                <p>Calories: {{ food_details_by_meal.breakfast.Calories }}</p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card" style="width: 18rem;">
+        <img src="{{ food_details_by_meal.lunch.Images }}" class="card-img-top" alt="...">
+        <div class="card_body">
+            <h5 class="card-title" style="margin-left: 17%;">{{ food_details_by_meal.lunch.Name }}</h5>
+            <p class="card-text">
+                <p class="inti" style="margin-left: 5%; cursor: pointer;" onclick="toggleVisibility('lunchIngredients')">Ingredients:</p>
+                <h6 class="h66" id="lunchIngredients" style="align-items: center; display: none;">{{ food_details_by_meal.lunch.Ingredient }}</h6>
+            </p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <p style="cursor: pointer;" onclick="toggleVisibility('lunchRecipe')">Recipe:</p>
+                <p id="lunchRecipe" style="display: none;">{{ food_details_by_meal.lunch.RecipeInstructions }}</p>
+            </li>
+            <li class="list-group-item">
+                <p>Nutrients:</p>
+                <p>Proteins: {{ food_details_by_meal.lunch.ProteinContent }}</p>
+                <p>Carbohydrates: {{ food_details_by_meal.lunch.CarbohydrateContent }}</p>
+                <p>Fats: {{ food_details_by_meal.lunch.FatContent }}</p>
+                <p>Calories: {{ food_details_by_meal.lunch.Calories }}</p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card" style="width: 18rem;">
+        <img src="{{ food_details_by_meal.snacks.Images }}" class="card-img-top" alt="...">
+        <div class="card_body">
+            <h5 class="card-title" style="margin-left: 17%;">{{ food_details_by_meal.snacks.Name }}</h5>
+            <p class="card-text">
+                <p class="inti" style="margin-left: 5%; cursor: pointer;" onclick="toggleVisibility('snacksIngredients')">Ingredients:</p>
+                <h6 class="h66" id="snacksIngredients" style="align-items: center; display: none;">{{ food_details_by_meal.snacks.Ingredient }}</h6>
+            </p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <p style="cursor: pointer;" onclick="toggleVisibility('snacksRecipe')">Recipe:</p>
+                <p id="snacksRecipe" style="display: none;">{{ food_details_by_meal.snacks.RecipeInstructions }}</p>
+            </li>
+            <li class="list-group-item">
+                <p>Nutrients:</p>
+                <p>Proteins: {{ food_details_by_meal.snacks.ProteinContent }}</p>
+                <p>Carbohydrates: {{ food_details_by_meal.snacks.CarbohydrateContent }}</p>
+                <p>Fats: {{ food_details_by_meal.snacks.FatContent }}</p>
+                <p>Calories: {{ food_details_by_meal.snacks.Calories }}</p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card" style="width: 18rem;">
+        <img src="{{ food_details_by_meal.dinner.Images }}" class="card-img-top" alt="...">
+        <div class="card_body">
+            <h5 class="card-title" style="margin-left: 17%;">{{ food_details_by_meal.dinner.Name }}</h5>
+            <p class="card-text">
+                <p class="inti" style="margin-left: 5%; cursor: pointer;" onclick="toggleVisibility('dinnerIngredients')">Ingredients:</p>
+                <h6 class="h66" id="dinnerIngredients" style="align-items: center; display: none;">{{ food_details_by_meal.dinner.Ingredient }}</h6>
+            </p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <p style="cursor: pointer;" onclick="toggleVisibility('dinnerRecipe')">Recipe:</p>
+                <p id="dinnerRecipe" style="display: none;">{{ food_details_by_meal.dinner.RecipeInstructions }}</p>
+            </li>
+            <li class="list-group-item">
+                <p>Nutrients:</p>
+                <p>Proteins: {{ food_details_by_meal.dinner.ProteinContent }}</p>
+                <p>Carbohydrates: {{ food_details_by_meal.dinner.CarbohydrateContent }}</p>
+                <p>Fats: {{ food_details_by_meal.dinner.FatContent }}</p>
+                <p>Calories: {{ food_details_by_meal.dinner.Calories }}</p>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <style>
+      /* Custom styles for the charts */
+      .chart-container {
+          display: inline-block;
+          margin: 10px;
+          height: 400px;
+          width: 350px;
+          position: relative;
+      }
+      .chart-container canvas {
+          position: absolute;
+          left: 0;
+          top: 0;
+      }
+      .chart-label {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 24px;
+          font-weight: bold;
+          color: #333;
+      }
+  </style>
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body>
+  <div class="chart-container">
+      <canvas id="proteinsChart" width="400" height="400"></canvas>
+      <div class="chart-label">Proteins</div>
+  </div>
+  <div class="chart-container">
+      <canvas id="carbsChart" width="400" height="400"></canvas>
+      <div class="chart-label">Carbs </div>
+  </div>
+  <div class="chart-container">
+      <canvas id="fatsChart" width="400" height="400"></canvas>
+      <div class="chart-label">Fats </div>
+  </div>
+  <div class="chart-container">
+      <canvas id="caloriesChart" width="400" height="400"></canvas>
+      <div class="chart-label">Calories </div>
+  </div>
+  
+  <script>
+    // Sample data for demonstration
+    // Get data from backend
+    const breakfastProteins = {{ food_details_by_meal.breakfast.ProteinContent }};
+    const lunchProteins = {{ food_details_by_meal.lunch.ProteinContent }};
+    const snacksProteins = {{ food_details_by_meal.snacks.ProteinContent }};
+    const dinnerProteins = {{ food_details_by_meal.dinner.ProteinContent }};
+
+    const breakfastCarbs = {{ food_details_by_meal.breakfast.CarbohydrateContent }};
+    const lunchCarbs = {{ food_details_by_meal.lunch.CarbohydrateContent }};
+    const snacksCarbs = {{ food_details_by_meal.snacks.CarbohydrateContent }};
+    const dinnerCarbs = {{ food_details_by_meal.dinner.CarbohydrateContent }};
+
+    const breakfastFats = {{ food_details_by_meal.breakfast.FatContent }};
+    const lunchFats = {{ food_details_by_meal.lunch.FatContent }};
+    const snacksFats = {{ food_details_by_meal.snacks.FatContent }};
+    const dinnerFats = {{ food_details_by_meal.dinner.FatContent }};
+
+    const breakfastCalories = {{ food_details_by_meal.breakfast.Calories }};
+    const lunchCalories = {{ food_details_by_meal.lunch.Calories }};
+    const snacksCalories = {{ food_details_by_meal.snacks.Calories }};
+    const dinnerCalories = {{ food_details_by_meal.dinner.Calories }};
+
+
+
+
+
+
+
+
+    const breakfastProteinsreq = {{ dri_results.breakfast.protein }};
+    const lunchProteinsreq = {{ dri_results.lunch.protein }};
+    const snacksProteinsreq = {{ dri_results.snacks.protein }};
+    const dinnerProteinsreq = {{ dri_results.dinner.protein }};
+
+    const breakfastCarbsreq = {{ dri_results.breakfast.carbohydrates }};
+    const lunchCarbsreq = {{ dri_results.lunch.carbohydrates }};
+    const snacksCarbsreq = {{ dri_results.snacks.carbohydrates }};
+    const dinnerCarbsreq = {{ dri_results.dinner.carbohydrates }};
+
+    const breakfastFatsreq = {{ dri_results.breakfast.fat }};
+    const lunchFatsreq = {{ dri_results.lunch.fat }};
+    const snacksFatsreq = {{ dri_results.snacks.fat }};
+    const dinnerFatsreq = {{ dri_results.dinner.fat }};
+
+    const breakfastCaloriesreq = {{ dri_results.breakfast.calories }};
+    const lunchCaloriesreq = {{ dri_results.lunch.calories }};
+    const snacksCaloriesreq = {{ dri_results.snacks.calories }};
+    const dinnerCaloriesreq = {{ dri_results.dinner.calories }};
+
+
+
+
+
+
+
+
+
+  
+    const ProteinData = {
+        labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
+        datasets: [
+            {
+                label: 'Required',
+                data: [breakfastProteinsreq, lunchProteinsreq, dinnerProteinsreq, snacksProteinsreq],
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2
+            },
+            {
+                label: 'Intake',
+                data: [breakfastProteins, lunchProteins, dinnerProteins, snacksProteins],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2
+            }
+        ]
+    };
+
+    // Create proteins chart
+    const proteinsChartCtx = document.getElementById('proteinsChart').getContext('2d');
+    new Chart(proteinsChartCtx, {
+        type: 'bar',
+        data: ProteinData,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+
+
+    const carbData = {
+        labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
+        datasets: [
+            {
+                label: 'Required',
+                data: [breakfastCarbsreq, lunchCarbsreq, dinnerCarbsreq, snacksCarbsreq],
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2
+            },
+            {
+                label: 'Intake',
+                data: [breakfastCarbs, lunchCarbs, dinnerCarbs, snacksCarbs],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2
+            }
+        ]
+    };
+
+    // Create proteins chart
+    const carbsChartCtx = document.getElementById('carbsChart').getContext('2d');
+    new Chart(carbsChartCtx, {
+        type: 'bar',
+        data: carbData,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+
+
+
+    
+    const FatsData = {
+        labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
+        datasets: [
+            {
+                label: 'Required',
+                data: [breakfastFatsreq, lunchFatsreq, dinnerFatsreq, snacksFatsreq],
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2
+            },
+            {
+                label: 'Intake',
+                data: [breakfastFats, lunchFats, dinnerFats, snacksFats],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2
+            }
+        ]
+    };
+
+    // Create proteins chart
+    const fatsChartCtx = document.getElementById('fatsChart').getContext('2d');
+    new Chart(fatsChartCtx, {
+        type: 'bar',
+        data: FatsData,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+
+
+
+
+    
+    const CaloriesData = {
+        labels: ['Breakfast', 'Lunch', 'Dinner', 'Snacks'],
+        datasets: [
+            {
+                label: 'Required',
+                data: [breakfastCaloriesreq, lunchCaloriesreq, dinnerCaloriesreq, snacksCaloriesreq],
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2
+            },
+            {
+                label: 'Intake',
+                data: [breakfastCalories, lunchCalories, dinnerCalories, snacksCalories],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2
+            }
+        ]
+    };
+
+    // Create proteins chart
+    const caloriesChartCtx = document.getElementById('caloriesChart').getContext('2d');
+    new Chart(caloriesChartCtx, {
+        type: 'bar',
+        data: CaloriesData,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+
+
+
+
+   </script>
+
+
+<style>
+
+#pie-chart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+  /* Custom styles for the charts */
+  .pie-chart-container {
+      position: relative;
+      height: 600px;
+      width: 600px;
+      
+  }
+  .pie-chart-container canvas {
+      position: absolute;
+      left: 0;
+      top: 0;
+  }
+  .pie-chart-label {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+  }
+</style>
+</head>
+<body>
+
+
+<script>
+  // Sample data for demonstration
+  const macronutrientsData = {
+      labels: ['Proteins', 'Fats', 'Carbs'],
+      datasets: [{
+          label: 'Macronutrients',
+          data: [120, 80, 200],
+          backgroundColor: [
+              'rgba(255, 99, 132, 0.6)',
+              'rgba(54, 162, 235, 0.6)',
+              'rgba(255, 206, 86, 0.6)'
+          ],
+          borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)'
+          ],
+          borderWidth: 2
+      }]
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

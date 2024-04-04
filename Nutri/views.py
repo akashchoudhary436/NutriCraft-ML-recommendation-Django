@@ -6,10 +6,12 @@ from django.http import JsonResponse, HttpResponse
 from .models import Food  
 from .models import Contact  
 from django.views.decorators.csrf import csrf_exempt
+from .models import MealDRI
+
 
 
 # Load CSV file once when the server starts
-df = pd.read_csv('fdata.csv', on_bad_lines='skip')
+df = pd.read_csv('finalss.csv', on_bad_lines='skip')
 
 def calculate_bmr(age, weight, height, gender):
     if gender.lower() == 'female':
@@ -75,6 +77,11 @@ def calculate_dri(age, weight, height, gender, activity_level, goal, meal_type='
     meal_carbohydrates = total_carbohydrates * meal_type_percentage
     meal_calories = calorie_intake * meal_type_percentage
 
+
+
+
+    
+
     return {
         'total_protein': total_protein,
         'total_fat': total_fat,
@@ -85,7 +92,6 @@ def calculate_dri(age, weight, height, gender, activity_level, goal, meal_type='
         'meal_carbohydrates': meal_carbohydrates,
         'meal_calories': meal_calories
     }
-
 def index(request):
     if request.method == 'POST':
         global df
@@ -96,37 +102,41 @@ def index(request):
         user_gender = request.POST['gender'].lower()
         user_activity_level = request.POST['activity_level'].lower()
         user_goal = request.POST['goal'].lower()
+        user_allergy = request.POST['allergy'].lower()
 
         # Modify this line to handle the 'preference' key gracefully
         user_preference = request.POST.get('preference', '').lower()
 
         user_keywords = request.POST['keywords'].lower().split(',')
 
+        # Filter dataframe based on allergies
+        if user_allergy == 'none':
+            df_filtered_allergy = df  # No need to filter if the user has no allergies
+        elif user_allergy == 'peanut':
+            df_filtered_allergy = df[~df['merged_column'].str.contains('peanut|cashew|almonds|nuts', case=False)]
+        elif user_allergy == 'gluten':
+            df_filtered_allergy = df[~df['merged_column'].str.contains('gluten|wheat|barley|rye|oat', case=False)]
+        elif user_allergy == 'dairy':
+            df_filtered_allergy = df[~df['merged_column'].str.contains('dairy|milk|cheese|yogurt|butter|cream|whey|ghee|buttermilk', case=False)]
+        elif user_allergy == 'seafood':
+            df_filtered_allergy = df[~df['merged_column'].str.contains('seafood|fish|shrimp|salmon|tuna|cod|halibut|crab|lobster|prawn|crayfish|oyster|squid|octopus', case=False)]
+        else:
+            df_filtered_allergy = df
 
         if user_preference == 'yes':
-            filtered_df = df[df['Veg/NonVeg'] == 0]  # Filter for vegetarian recipes
+            df_filtered_preference = df_filtered_allergy[df_filtered_allergy['Veg/NonVeg'] == 0]  # Filter for vegetarian recipes
         else:
-            filtered_df = df  # Show all recipes
+            df_filtered_preference = df_filtered_allergy  # Show all recipes
 
         dri_results = {}
         recommended_recipes_by_meal = {}  # Initialize this dictionary
 
         if "na" in user_keywords:
-
-            if user_preference == 'yes':
-             filtered_df = filtered_df[filtered_df['Veg/NonVeg'] == 0]  # Filter for vegetarian recipes
-            else:
-        # No need to filter if preference is not specified or user_preference == 'no'
-             pass
-
-
-
-
             for meal_type in ['breakfast', 'lunch', 'dinner', 'snacks']:
                 dri_results[meal_type] = calculate_dri(user_age, user_weight, user_height, user_gender, user_activity_level, user_goal, meal_type=meal_type)
 
                 user_dri = np.array([dri_results[meal_type][key] for key in ['meal_fat', 'meal_protein', 'meal_carbohydrates', 'meal_calories']])
-                recipe_nutrients = filtered_df[['FatContent', 'ProteinContent', 'CarbohydrateContent', 'Calories']].values
+                recipe_nutrients = df_filtered_preference[['FatContent', 'ProteinContent', 'CarbohydrateContent', 'Calories']].values
                 # Use KNeighborsRegressor instead of euclidean_distances
                 knn = NearestNeighbors(n_neighbors=20, algorithm='auto')
                 knn.fit(recipe_nutrients, np.zeros(recipe_nutrients.shape[0]))  # Fit the model, since KNN does not require labels
@@ -138,20 +148,19 @@ def index(request):
                 top_recipes = []
                 for index in top_indices_meal_dri:
                     top_recipes.append({
-                        'ID': filtered_df['ID'].iloc[index],
-                        'Name': filtered_df['Name'].iloc[index],
-                        'FatContent': filtered_df['FatContent'].iloc[index],
-                        'ProteinContent': filtered_df['ProteinContent'].iloc[index],
-                        'CarbohydrateContent': filtered_df['CarbohydrateContent'].iloc[index],
-                        'Calories': filtered_df['Calories'].iloc[index],
-                        'RecipeInstructions': filtered_df['RecipeInstructions'].iloc[index],
-                        'Images': filtered_df['Images'].iloc[index],
-                        'Description': filtered_df['Description'].iloc[index]
+                        'ID': df_filtered_preference['ID'].iloc[index],
+                        'Name': df_filtered_preference['Name'].iloc[index],
+                        'FatContent': df_filtered_preference['FatContent'].iloc[index],
+                        'ProteinContent': df_filtered_preference['ProteinContent'].iloc[index],
+                        'CarbohydrateContent': df_filtered_preference['CarbohydrateContent'].iloc[index],
+                        'Calories': df_filtered_preference['Calories'].iloc[index],
+                        'RecipeInstructions': df_filtered_preference['RecipeInstructions'].iloc[index],
+                        'Images': df_filtered_preference['Images'].iloc[index],
                     })
                 recommended_recipes_by_meal[meal_type] = top_recipes
         else:
             # Filter DataFrame based on user keywords
-            filtered_by_name = filtered_df[filtered_df['merged_column'].apply(lambda x: any(keyword in x.lower() for keyword in user_keywords))]
+            filtered_by_name = df_filtered_preference[df_filtered_preference['merged_column'].apply(lambda x: any(keyword in x.lower() for keyword in user_keywords))]
 
             for meal_type in ['breakfast', 'lunch', 'dinner', 'snacks']:
                 dri_results[meal_type] = calculate_dri(user_age, user_weight, user_height, user_gender, user_activity_level, user_goal, meal_type=meal_type)
@@ -176,19 +185,29 @@ def index(request):
                         'Calories': filtered_by_name['Calories'].iloc[index],
                         'RecipeInstructions': filtered_by_name['RecipeInstructions'].iloc[index],
                         'Images': filtered_by_name['Images'].iloc[index],
-                        'Description': filtered_by_name['Description'].iloc[index]
                     })
                 recommended_recipes_by_meal[meal_type] = top_recipes
 
         context = {
             'dri_results': dri_results,
             'recommended_recipes_by_meal': recommended_recipes_by_meal
-            
         }
+
+                # Save DRI results to the database
+        for meal_type, dri_result in dri_results.items():
+            MealDRI.objects.create(
+                meal_type=meal_type,
+                calories=dri_result['meal_calories'],
+                protein=dri_result['meal_protein'],
+                fat=dri_result['meal_fat'],
+                carbohydrates=dri_result['meal_carbohydrates']
+            )
+
 
         return render(request, 'recommendation.html', context)
 
     return render(request, 'index.html')
+
 
 
 def home(request):
@@ -214,7 +233,7 @@ def save_food(request):
     if request.method == 'POST':
         meal_type = request.POST.get('meal_type')
         food_name = request.POST.get('food_name')
-        food_id = request.POST.get('food_id')
+        food_id = int(float(request.POST.get('food_id')))  # Convert food_id to float and then int
         
         # Save the food data
         Food.save_food(meal_type, food_name, food_id)
@@ -227,6 +246,18 @@ def save_food(request):
 
 def get_food_details(request):
     global df
+
+
+        # Retrieve the latest DRI values for all meal types
+    latest_dri_values = {
+        'breakfast': MealDRI.objects.filter(meal_type='breakfast').latest('id'),
+        'lunch': MealDRI.objects.filter(meal_type='lunch').latest('id'),
+        'dinner': MealDRI.objects.filter(meal_type='dinner').latest('id'),
+        'snacks': MealDRI.objects.filter(meal_type='snacks').latest('id'),
+    }
+
+
+
     
     # Initialize an empty dictionary to store food details by meal type
     food_details_by_meal = {}
@@ -245,7 +276,7 @@ def get_food_details(request):
         # Iterate over each food ID for the current meal type
         for food_id in food_ids:
             # Search for the food ID in the CSV file
-            food_details = df[df['ID'] == food_id][['Name', 'Description', 'Images', 'RecipeCategory', 'Keywords', 'RecipeIngredientQuantities', 'RecipeIngredientParts', 'Calories', 'FatContent', 'CholesterolContent', 'SodiumContent', 'CarbohydrateContent', 'FiberContent', 'SugarContent', 'ProteinContent', 'RecipeInstructions', 'merged_column', 'Veg/NonVeg']]
+            food_details = df[df['ID'] == food_id][['Name',  'Images',  'Calories', 'FatContent',  'CarbohydrateContent','ProteinContent', 'RecipeInstructions', 'Ingredient' ,'merged_column' ]]
             
             # Convert the food details to a dictionary
             food_details_dict = food_details.iloc[0].to_dict()
@@ -256,11 +287,15 @@ def get_food_details(request):
         # Add the food details for the current meal type to the main dictionary
         food_details_by_meal[meal_type] = meal_type_food_details
     
-
+    # Render the HTML template with the food details and DRI results by meal type
+    context = {
+        'food_details_by_meal': food_details_by_meal,
+         'dri_results': latest_dri_values, 
+  
+    }
     
     # Render the HTML template with the food details by meal type
-    return render(request, 'food_details.html', {'food_details_by_meal': food_details_by_meal})
-
+    return render(request, 'food_details.html', context)
 
 def graph(request):
      return render(request, 'graph.html')
@@ -287,3 +322,7 @@ def contact(request):
     else:
         # Render contact page if request method is not POST
         return render(request, 'index.html')
+
+
+
+

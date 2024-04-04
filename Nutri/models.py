@@ -38,3 +38,11 @@ class Contact(models.Model):
 
     def __str__(self):
         return 'Message from ' + self.Name
+
+
+class MealDRI(models.Model):
+    meal_type = models.CharField(max_length=50)
+    calories = models.FloatField()
+    protein = models.FloatField()
+    fat = models.FloatField()
+    carbohydrates = models.FloatField()
